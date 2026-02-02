@@ -69,7 +69,10 @@ def edit():
     index = None
     old_task = None
     new_task = None
-    invalid_message = "Invalid index, please try again."
+    invalid_message = "\nInvalid index, please try again.\n"
+    new_text = None
+    status = None
+    category = None
 
     try:
         input_e = int(input("Please enter the index of the task you want to edit: "))
@@ -85,9 +88,6 @@ def edit():
             print(f'\nEditing "{viewed[index]}"')
             old_task = viewed[index].split(": ")
             input_e = input("\nEnter 1 to edit the task or 2 to edit the category: ")
-
-            if input_e != "1" or input_e != "2":
-                print("\nInvalid choice recieved, please try again.\n")
 
             if input_e == "1":
                 input_e = input("\nPlease enter the task: ")
@@ -117,15 +117,47 @@ def edit():
 
             if input_e == "2":
                 print(category_message)
-
                 input_e = input("Enter your choice: ")
-                old_task = viewed[index].split(": ")
-                old_task[0] = old_task[0].split(")")
-
-                print(old_task)
 
                 if not input_e:
                     print("\nEmpty category recieved, please try again.\n")
+                    return
+
+                old_task = viewed[index].split(": ")
+                status, category = old_task[0].split("[")
+                status, category = status.strip("()"), category.strip("[]")
+
+                match input_e:
+                    case "1":
+                        category = "[Work | School]"
+                        print("\nWork | School category assigned.\n")
+                    case "2":
+                        category = "[Personal | Home]"
+                        print("\nPersonal | Home category assigned.\n")
+                    case "3":
+                        category = "[Health & Welness]"
+                        print("\nHealth & Wellness category assigned.\n")
+                    case "4":
+                        category = "[Finance]"
+                        print("\nFinance category assigned.\n")
+                    case _:
+                        category = f"[{input_e.strip()}]"
+                        print(f"\n{input_e.strip()} category assigned.\n")
+
+                status = "(" + status + ")"
+
+                new_text = status + category + ": " + old_task[1].strip()
+                viewed[index] = new_text
+
+                open(file_path, "w").close()
+                for text in viewed:
+                    if text.startswith("(Incomplete)"):
+                        with open(file_path, "a") as f:
+                            f.write("[]" + text[12:] + "\n")
+
+                    if text.startswith("(Complete)"):
+                        with open(file_path, "a") as f:
+                            f.write("[x]" + text[10:] + "\n")
 
     except ValueError:
         print(invalid_message)

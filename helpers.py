@@ -5,7 +5,7 @@ from options import SAVE_FILE_PATH, USAGE_MESSAGE
 file_path = Path(SAVE_FILE_PATH)
 empty_message = "Empty tasks list, please add some tasks and try again.\n"
 category_message = """\nPlease enter a category or choose from these defaults.\n
-1. Work | School\n2. Personal | Home\n3. Health & Wellness\n4. Finance\nIf no input given the text will be assigned no category by default.\n"""
+1. Work | School\n2. Personal | Home\n3. Health & Wellness\n4. Finance\n"""
 
 
 def append_helper(task, cat):
