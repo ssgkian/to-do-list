@@ -42,8 +42,17 @@ def category_helper(task):
     print(f""""{task}" added successfully.""")
 
 
-def editing_helper():
-    pass
+def writing_helper(viewed_list):
+    open(file_path, "w").close()
+
+    for text in viewed_list:
+        if text.startswith("(Incomplete)"):
+            with open(file_path, "a") as f:
+                f.write("[]" + text[12:] + "\n")
+
+        if text.startswith("(Complete)"):
+            with open(file_path, "a") as f:
+                f.write("[x]" + text[10:] + "\n")
 
 
 def text_list_builder():
@@ -69,7 +78,7 @@ def text_list_builder():
 def message_helper():
     if USAGE_MESSAGE == 1:
         print(
-            '\nUsage: "add" or "a" to add tasks, "delete" or "d" to delete tasks, "view" or "v" for viewing tasks, "edit" or "e" for editing tasks.\nTasks are saved in a ".txt" file in the program directory by default.\n'
+            '\nUsage: "add" or "a" to add tasks, "delete" or "d" to delete tasks, "view" or "v" for viewing tasks, "edit" or "e" for editing tasks, and "mark" or "m" to mark tasks.\nTasks are saved in a ".txt" file in the program directory by default.\n'
         )
     elif USAGE_MESSAGE == 0:
         return
