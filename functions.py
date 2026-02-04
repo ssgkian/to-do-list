@@ -1,5 +1,3 @@
-import os
-
 from helpers import (
     category_helper,
     category_message,
@@ -8,7 +6,6 @@ from helpers import (
     text_list_builder,
     writing_helper,
 )
-from options import SAVE_FILE_PATH
 
 file_path.touch(exist_ok=True)
 
@@ -39,18 +36,29 @@ def input_handler():
             mark()
         elif inp == "delete" or inp == "d":
             delete()
+        elif inp == "clear":
+            clear()
+        elif inp == "help" or inp == "h":
+            print(
+                '\nUsage: "add" or "a" to add tasks, "delete" or "d" to delete tasks, "view" or "v" for viewing tasks, "edit" or "e" for editing tasks, "mark" or "m" to mark tasks and "clear" to clear the terminal.\nTasks are saved in a ".txt" file in the program directory by default.\n'
+            )
         else:
             print("\nInvalid choice, please try again.\n")
 
 
+def clear():
+    print("\n" * 100)
+
+
 def add():
+    print("\n----Add Mode----\n")
     input_a = input("Please enter the task: ")
     task = None
-    if input_a:
-        task = input_a
+    if input_a.strip():
+        task = input_a.strip()
         category_helper(task)
-    if not input_a:
-        print("Empty input recieved, please try again.\n")
+    if not input_a.strip():
+        print("\nEmpty input recieved, please try again.\n")
         return
 
 
@@ -61,7 +69,7 @@ def view():
         return
     for i, text in enumerate(new_texts, start=1):
         print(f"{i}. {text}")
-    print("")
+    print("\n----END----\n")
     return new_texts
 
 
@@ -69,6 +77,7 @@ invalid_message = "\nInvalid index, please try again.\n"
 
 
 def edit():
+    print("\n----Edit Mode----\n")
     viewed = view()
     if not viewed:
         return
@@ -102,12 +111,12 @@ def edit():
             if input_e == "1":
                 input_e = input("\nPlease enter the task: ")
 
-                if input_e == 0 or not input_e:
-                    print("Empty task recieved, please try again.\n")
+                if input_e == 0 or not input_e.strip():
+                    print("\nEmpty task recieved, please try again.\n")
                     return
 
                 new_task = old_task.copy()
-                new_task[1] = input_e
+                new_task[1] = input_e.strip()
                 new_task = ": ".join(new_task)
 
                 viewed[index] = new_task
@@ -118,9 +127,9 @@ def edit():
 
             if input_e == "2":
                 print(category_message)
-                input_e = input("\nEnter your choice: ")
+                input_e = input("Enter your choice: ")
 
-                if not input_e:
+                if not input_e.strip():
                     print("\nEmpty category recieved, please try again.\n")
                     return
 
@@ -157,6 +166,7 @@ def edit():
 
 
 def mark():
+    print("\n----Mark Mode----")
     viewed = view()
     if not viewed:
         return

@@ -4,8 +4,9 @@ from options import SAVE_FILE_PATH, USAGE_MESSAGE
 
 file_path = Path(SAVE_FILE_PATH)
 empty_message = "Empty tasks list, please add some tasks and try again.\n"
+
 category_message = """\nPlease enter a category or choose from these defaults.\n
-1. Work | School\n2. Personal | Home\n3. Health & Wellness\n4. Finance"""
+1. Work | School\n2. Personal | Home\n3. Health & Wellness\n4. Finance\n"""
 
 
 def append_helper(task, cat):
@@ -15,9 +16,7 @@ def append_helper(task, cat):
 
 def category_helper(task):
     print(category_message)
-
     input_a = input("Enter your choice: ")
-
     match input_a:
         case "1":
             print("\nWork | School category assigned.")
@@ -32,14 +31,14 @@ def category_helper(task):
             print("\nFinance category assigned.")
             append_helper(task, "Finance")
         case _:
-            if not input_a:
+            if not input_a.strip():
                 print("\nNo category assigned.")
                 append_helper(task, "None")
             else:
                 print(f"\n{input_a.strip()} category assigned.")
                 append_helper(task, (input_a.strip()))
 
-    print(f""""\n{task}" added successfully.\n""")
+    print(f'\n"{task}" added successfully.\n')
 
 
 def writing_helper(viewed_list):
