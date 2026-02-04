@@ -1,11 +1,9 @@
-import sys
-
 from functions import menu
 
 
 def main():
-    print("Starting To-Do-List app...")
-    print("To-Do-List app started!")
+    print("Starting To-Do-List app...\n")
+    print("To-Do-List app started!\n")
     menu()
 
 
