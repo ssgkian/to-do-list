@@ -9,4 +9,5 @@ Your tasks are automatically saved to a file, so you never lose progress.
 
 Run the project with:
 ```bash
-python3 main.py```
+python3 main.py
+```
