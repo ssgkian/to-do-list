@@ -31,12 +31,16 @@ def input_handler():
         inp = input("Enter your choice: ")
         if inp == "add" or inp == "a":
             add()
-        if inp == "view" or inp == "v":
+        elif inp == "view" or inp == "v":
             _ = view()
-        if inp == "edit" or inp == "e":
+        elif inp == "edit" or inp == "e":
             edit()
-        if inp == "mark" or inp == "m":
+        elif inp == "mark" or inp == "m":
             mark()
+        elif inp == "delete" or inp == "d":
+            delete()
+        else:
+            print("\nInvalid choice, please try again.\n")
 
 
 def add():
@@ -216,4 +220,42 @@ def mark():
 
 
 def delete():
-    pass
+    print("\n----Delete Mode----")
+    viewed = view()
+    if not viewed:
+        return
+    elif len(viewed) == 0:
+        return
+
+    length = len(viewed)
+    removed_text = None
+    try:
+        input_e = int(input("Please enter the index of the task you want to delete: "))
+        if input_e == 0:
+            print(invalid_message)
+            return
+        if input_e:
+            if input_e > length:
+                print(invalid_message)
+                return
+            index = input_e - 1
+            print("\nNote: Deleting tasks is irreversable.\n")
+            input_e = int(
+                input(
+                    f'Enter 1 to confirm deletion, or 2 to stop deletion "{viewed[index]}": '
+                )
+            )
+
+            if input_e != 1 and input_e != 2:
+                print("\nInvalid choice, please try again.\n")
+                return
+            if input_e == 1:
+                removed_text = viewed.pop(index)
+                writing_helper(viewed)
+                print(f'\nDeleted: "{removed_text}"\n')
+
+            elif input_e == 2:
+                print("\nDeletion aborted.\n")
+
+    except ValueError:
+        print(invalid_message)
